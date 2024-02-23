@@ -6,7 +6,7 @@ on:
     branches: main 
 
 jobs:
-  Analysis:
+  analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Analyze with SonarCloud        
@@ -19,7 +19,7 @@ jobs:
             -Dsonar.projectKey=RameshNaiduNakka_GitHubActions_Demo
             -Dsonar.organization=rameshnaidunakka
   build:
-
+    needs: analysis
     runs-on: ubuntu-latest
     permissions:
       contents: read

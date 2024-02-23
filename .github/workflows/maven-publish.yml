@@ -6,20 +6,20 @@ on:
     branches: main 
 
 jobs:
-  analysis:
+  Analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Analyze with SonarCloud        
         uses: SonarSource/sonarcloud-github-action@v2.1.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Needed to get PR information
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
         with:          
           args:            
             -Dsonar.projectKey=RameshNaiduNakka_GitHubActions_Demo
             -Dsonar.organization=rameshnaidunakka
   build:
-    needs: analysis
+    needs: Analysis
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -37,10 +37,7 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-publish:
- runs-on: ubuntu-latest
-  steps: 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} 
